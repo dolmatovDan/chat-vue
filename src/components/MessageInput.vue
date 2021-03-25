@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <div class="chat__container">
+    <div @keyup.enter="sendMessage" class="chat__container">
       <input
         v-model="message"
         placeholder="Type a message. . ."
@@ -8,17 +8,7 @@
         id="messageInput"
         class="chat__messageInput"
       />
-      <div class="chat__send-place">
-        <button class="chat__icon button"></button>
-        <button class="chat__icon button"></button>
-        <button
-          v-on:click="sendMessage"
-          id="messageButton"
-          class="button button--send"
-        >
-          Отправить
-        </button>
-      </div>
+      <div class="chat__send-place"></div>
     </div>
   </div>
 </template>
@@ -30,10 +20,55 @@ export default {
   props: {},
   methods: {
     sendMessage: function() {
-      this.$emit("message", this.message);
+      if (this.message) {
+        this.$emit("message", this.message);
+        this.message = "";
+      }
     },
+  },
+  data: function() {
+    return {
+      message: "",
+    };
   },
 };
 </script>
 
-<style></style>
+<style>
+.chat__messageInput {
+  width: 100%;
+  height: 30px;
+  border: none;
+  padding: 20px 30px;
+  font-size: 14px;
+  line-height: 1.43;
+  color: #9ba4b0;
+  padding-right: 150px;
+}
+.chat__container {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.chat__send-place {
+  display: flex;
+  width: 145px;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  right: 20px;
+}
+
+.chat__icon {
+  width: 17px;
+  height: 17px;
+  margin-right: 20px;
+  background-color: red;
+  background-repeat: no-repeat;
+  background-size: cover;
+  flex-shrink: 0;
+}
+</style>

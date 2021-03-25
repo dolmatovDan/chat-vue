@@ -1,27 +1,24 @@
 <template>
-  <div id="app">
+  <div id="app" class="app">
     <MessageContainer />
   </div>
 </template>
 
 <script>
-import MessageContainer from './components/MessageContainer.vue'
+import MessageContainer from "./components/MessageContainer.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    MessageContainer
-  }
-}
+    MessageContainer,
+  },
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.app {
+  display: flex;
+  justify-content: center;
+  font-family: Trebuchet MS;
 }
 </style>

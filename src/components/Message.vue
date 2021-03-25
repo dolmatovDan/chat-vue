@@ -1,18 +1,18 @@
 <template>
   <div class="message">
-    <div class="message-holder">
-      <div class="message-container">
-        <div class="message__sender">
-          <div
-            class="message__icon"
-            :style="{
-              'background-image': avatarLink,
-            }"
-          ></div>
-          <div class="message__name">{{ name }}</div>
-        </div>
-        <span class="message__time">{{ msgTime }}</span>
+    <div class="message-container">
+      <div class="message__sender">
+        <div
+          class="message__icon"
+          :style="{
+            'background-image': avatarLink,
+          }"
+        ></div>
+        <div class="message__name">{{ name }}</div>
       </div>
+      <span class="message__time">{{ msgTime }}</span>
+    </div>
+    <div class="message-holder">
       <div class="message--friend message">{{ text }}</div>
     </div>
   </div>
@@ -27,6 +27,7 @@ export default {
     avatar: String,
     name: String,
     time: String,
+    sender: String,
   },
   methods: {},
   computed: {
@@ -41,6 +42,9 @@ export default {
       return hours + ":" + min + " " + "A.M.";
     },
     avatarLink: function() {
+      if (!this.avatar) {
+        return "url(@/assets/)";
+      }
       return "url(" + require("@/assets/" + this.avatar) + ")";
     },
   },
@@ -51,8 +55,7 @@ export default {
 .message {
   display: inline-block;
   padding: 11px 7px 9px 14px;
-  border-radius: 5px;
-  background-color: #5965db;
+
   max-width: 420px;
   word-break: break-word;
   margin-bottom: 25px;
@@ -61,6 +64,8 @@ export default {
 .message-holder {
   display: flex;
   flex-direction: column;
+  background-color: #5965db;
+  border-radius: 10px;
 }
 
 .message-container {
@@ -69,6 +74,7 @@ export default {
   display: flex;
   justify-content: space-between;
   margin-bottom: 14px;
+  background-color: transparent;
 }
 
 .message__sender {
@@ -86,7 +92,7 @@ export default {
 .message__icon {
   width: 22px;
   height: 22px;
-  background-color: red;
+  background-color: transparent;
   border-radius: 50%;
   margin-right: 10px;
 }

@@ -32,14 +32,11 @@ export default {
 </script>
 
 <style>
-.messageMy {
-  background-color: #f4f4f4;
-  color: #000;
-}
-
 .group {
   display: flex;
   flex-direction: column;
   padding: 30px;
+  width: 100%;
+  box-sizing: border-box;
 }
 </style>

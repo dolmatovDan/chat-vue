@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ messageMyLocation: this.sender == 'me' }" class="message">
+  <div :class="{ 'message--my-location': this.sender == 'me' }" class="message">
     <div class="message-container">
       <div class="message__sender">
         <div
@@ -12,9 +12,9 @@
       </div>
       <span class="message__time">{{ msgTime }}</span>
     </div>
-    <div :class="{ messageMy: this.sender == 'me' }" class="message-holder">
+    <div :class="{ 'message--my': this.sender == 'me' }" class="message-holder">
       <div
-        :class="{ messageMyText: this.sender == 'me' }"
+        :class="{ 'message--my-text': this.sender == 'me' }"
         class="message--friend message"
       >
         {{ text }}
@@ -60,10 +60,9 @@ export default {
 .message {
   display: inline-block;
   padding: 11px 7px 9px 14px;
-
+  border-radius: 10px;
   max-width: 420px;
   word-break: break-word;
-  margin-bottom: 25px;
 }
 
 .message-holder {
@@ -106,11 +105,11 @@ export default {
   font-size: 14px;
 }
 
-.messageMy {
+.message--my {
   background-color: #f4f4f4;
 }
 
-.messageMyLocation {
+.message--my-location {
   align-self: flex-end;
 }
 
@@ -118,14 +117,13 @@ export default {
   color: #fff;
   background-color: #5965db;
   align-self: flex-start;
-  height: 20px;
 }
 
 .message--hidden {
   display: none;
 }
 
-.messageMyText {
+.message--my-text {
   background-color: #f4f4f4;
   color: #000;
 }

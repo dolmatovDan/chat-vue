@@ -2,7 +2,7 @@
   <div class="">
     <div class="chat">
       <Group :messages="messages" />
-      <MsgInput v-on:message="createMessage" />
+      <MsgInput v-on:message="createAndSendMessage" />
     </div>
   </div>
 </template>
@@ -19,32 +19,52 @@ export default {
   },
   data: function() {
     return {
-      messages: [
+      phrases: [
+        "Hi Justin! We just wanted to welcome you to our team.",
+        "We are all excited to have you, we loved the work that you showed us during your interview and you fit well with everyone on our team and company. If you have any questions feel free to ask and someone on the team will help you out.",
+        "Since you were already working within the company for another position, it won’t long until you have access to all of our files.",
+        "Hey Justin, I’m looking forward to working with you on some of the upcoming projects! But to answer your questions, yes we do have a separate group chat. I’m sure you’ll be added soon!",
+      ],
+      senders: [
         {
-          text: "Hello",
-          avatar: "Angela.png",
-          name: "Terry",
-          time: "Sun Mar 14 2021 15:32:20 GMT+0300 (Москва, стандартное время)",
-          sender: "friend",
+          name: "Victor",
+          icon: "Victor.png",
         },
         {
-          text: "How are you?",
-          avatar: "Terry.png",
-          name: "Robert",
-          time: "Sun Mar 14 2021 15:32:20 GMT+0300 (Москва, стандартное время)",
-          sender: "friend",
+          id: "Angela",
+          icon: "Angela.png",
+        },
+        {
+          name: "Terry",
+          icon: "Terry.png",
         },
       ],
+      messages: [],
     };
   },
   methods: {
-    createMessage: function(data) {
+    createAndSendMessage: function(data) {
       this.messages.push({
         text: data,
         avatar: "",
         name: "",
         time: "Sun Mar 14 2021 15:32:20 GMT+0300 (Москва, стандартное время)",
         sender: "me",
+      });
+      this.sendSenderMessage();
+    },
+    genRandom: function(number) {
+      return Math.trunc(Math.random() * number);
+    },
+    sendSenderMessage: function() {
+      const message = this.phrases[this.genRandom(this.phrases.length)];
+      const sender = this.senders[this.genRandom(this.senders.length)];
+      this.messages.push({
+        text: message,
+        avatar: sender.icon,
+        name: sender.name,
+        time: "Sun Mar 14 2021 15:32:20 GMT+0300 (Москва, стандартное время)",
+        sender: "friend",
       });
     },
   },

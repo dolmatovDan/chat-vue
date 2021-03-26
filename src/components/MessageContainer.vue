@@ -31,7 +31,7 @@ export default {
           icon: "Victor.png",
         },
         {
-          id: "Angela",
+          name: "Angela",
           icon: "Angela.png",
         },
         {
@@ -48,7 +48,7 @@ export default {
         text: data,
         avatar: "",
         name: "",
-        time: "Sun Mar 14 2021 15:32:20 GMT+0300 (Москва, стандартное время)",
+        time: this.getTime(),
         sender: "me",
       });
       this.sendSenderMessage();
@@ -63,9 +63,12 @@ export default {
         text: message,
         avatar: sender.icon,
         name: sender.name,
-        time: "Sun Mar 14 2021 15:32:20 GMT+0300 (Москва, стандартное время)",
+        time: this.getTime(),
         sender: "friend",
       });
+    },
+    getTime: function() {
+      return new Date();
     },
   },
 };

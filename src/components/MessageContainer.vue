@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div class="chat">
-      <Group :messages="messages" />
+      <Group :messages="messagesQueues" />
       <MsgInput v-on:message="createAndSendMessage" />
     </div>
   </div>
@@ -11,20 +11,38 @@
 import Group from "./Group.vue";
 import MsgInput from "./MessageInput.vue";
 
+const phrases = [
+  "Hi Justin! We just wanted to welcome you to our team.",
+  "We are all excited to have you, we loved the work that you showed us during your interview and you fit well with everyone on our team and company. If you have any questions feel free to ask and someone on the team will help you out.",
+  "Since you were already working within the company for another position, it won’t long until you have access to all of our files.",
+  "Hey Justin, I’m looking forward to working with you on some of the upcoming projects! But to answer your questions, yes we do have a separate group chat. I’m sure you’ll be added soon!",
+];
+const senders = [
+  {
+    name: "Victor",
+    icon: "Victor.png",
+  },
+  {
+    name: "Angela",
+    icon: "Angela.png",
+  },
+  {
+    name: "Terry",
+    icon: "Terry.png",
+  },
+];
+
 export default {
   name: "App",
   components: {
     Group,
     MsgInput,
   },
+  props: {
+    messagesQueues: Array,
+  },
   data: function() {
     return {
-      phrases: [
-        "Hi Justin! We just wanted to welcome you to our team.",
-        "We are all excited to have you, we loved the work that you showed us during your interview and you fit well with everyone on our team and company. If you have any questions feel free to ask and someone on the team will help you out.",
-        "Since you were already working within the company for another position, it won’t long until you have access to all of our files.",
-        "Hey Justin, I’m looking forward to working with you on some of the upcoming projects! But to answer your questions, yes we do have a separate group chat. I’m sure you’ll be added soon!",
-      ],
       senders: [
         {
           name: "Victor",
@@ -39,33 +57,34 @@ export default {
           icon: "Terry.png",
         },
       ],
-      messages: [],
     };
   },
   methods: {
     createAndSendMessage: function(data) {
-      this.messages.push({
+      const message = {
         text: data,
         avatar: "",
         name: "",
         time: this.getTime(),
         sender: "me",
-      });
-      this.sendSenderMessage();
+      };
+      const friendMessage = this.createSenderMessage();
+
+      this.$emit("addToQueue", [message, friendMessage]);
     },
     genRandom: function(number) {
       return Math.trunc(Math.random() * number);
     },
-    sendSenderMessage: function() {
-      const message = this.phrases[this.genRandom(this.phrases.length)];
-      const sender = this.senders[this.genRandom(this.senders.length)];
-      this.messages.push({
+    createSenderMessage: function() {
+      const message = phrases[this.genRandom(phrases.length)];
+      const sender = senders[this.genRandom(senders.length)];
+      return {
         text: message,
         avatar: sender.icon,
         name: sender.name,
         time: this.getTime(),
         sender: "friend",
-      });
+      };
     },
     getTime: function() {
       return new Date();
@@ -94,7 +113,7 @@ export default {
 }
 
 .chat {
-  width: 60vw;
+  width: 685px;
   flex-grow: 1;
   background-color: #f8fafd;
   height: 100vh;

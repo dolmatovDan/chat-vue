@@ -31,7 +31,7 @@ export default {
     text: String,
     avatar: String,
     name: String,
-    time: String,
+    time: Date,
     sender: String,
   },
   methods: {},
@@ -119,7 +119,7 @@ export default {
   align-self: flex-start;
 }
 
-.message--hidden {
+.hidden {
   display: none;
 }
 

@@ -1,16 +1,16 @@
 <template>
   <div id="app" class="app">
-    <MessageContainer />
+    <SocialNetwork />
   </div>
 </template>
 
 <script>
-import MessageContainer from "./components/MessageContainer.vue";
+import SocialNetwork from "./components/SocialNetwork.vue";
 
 export default {
   name: "App",
   components: {
-    MessageContainer,
+    SocialNetwork,
   },
 };
 </script>

@@ -6,7 +6,8 @@
       v-on:getID="changeID"
     />
     <MessageContainer
-      :messagesQueues="getDialoguesMessages"
+      :currentID="activeID"
+      :messagesQueues="getMessages()"
       v-on:addToQueue="addToQueue"
     />
   </div>
@@ -25,25 +26,23 @@ export default {
 
   data: function() {
     return {
-      messagesQueues: {
-        groupID1: [],
-        groupID2: [],
-      },
       activeID: "groupID1",
     };
   },
   methods: {
-    addToQueue: function(data) {
-      this.messagesQueues[this.activeID].push(...data);
+    addToQueue: function({ messages, id }) {
+      this.$store.commit("addMessageToQueue", { messages, id });
     },
     changeID: function(id) {
-      console.log(id);
       this.activeID = id;
+    },
+    getMessages: function() {
+      return this.$store.getters.getMessagesByDialogueID(this.activeID);
     },
   },
   computed: {
-    getDialoguesMessages: function() {
-      return this.messagesQueues[this.activeID];
+    messagesQueues: function() {
+      return this.$store.getters.getMessagesQueue;
     },
   },
 };

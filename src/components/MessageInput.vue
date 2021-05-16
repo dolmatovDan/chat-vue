@@ -44,6 +44,7 @@ export default {
   line-height: 1.43;
   color: #9ba4b0;
   padding-right: 150px;
+  outline: none;
 }
 .chat__container {
   height: 60px;

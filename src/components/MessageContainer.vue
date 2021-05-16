@@ -40,6 +40,7 @@ export default {
   },
   props: {
     messagesQueues: Array,
+    currentID: String,
   },
   data: function() {
     return {
@@ -69,8 +70,17 @@ export default {
         sender: "me",
       };
       const friendMessage = this.createSenderMessage();
-
-      this.$emit("addToQueue", [message, friendMessage]);
+      const id = this.currentID;
+      this.$emit("addToQueue", {
+        messages: [message],
+        id,
+      });
+      setTimeout(() => {
+        this.$emit("addToQueue", {
+          messages: [friendMessage],
+          id,
+        });
+      }, 2000);
     },
     genRandom: function(number) {
       return Math.trunc(Math.random() * number);

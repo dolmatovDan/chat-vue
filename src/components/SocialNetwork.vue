@@ -1,15 +1,12 @@
 <template>
   <div class="socialNetwork">
-    <Dialogues
-      :activeDialogue="activeID"
-      :messagesQueues="messagesQueues"
-      v-on:getID="changeID"
-    />
+    <Dialogues :activeDialogue="getID" :messagesQueues="messagesQueues" />
     <MessageContainer
-      :currentID="activeID"
+      :currentID="getID"
       :messagesQueues="getMessages()"
       v-on:addToQueue="addToQueue"
     />
+    <Modal v-show="!isLogin" />
   </div>
 </template>
 
@@ -17,32 +14,36 @@
 import MessageContainer from "./MessageContainer.vue";
 import Dialogues from "./Dialogues.vue";
 
+import Modal from "./Modal.vue";
+
 export default {
   name: "SocialNetwork",
   components: {
     MessageContainer,
     Dialogues,
+    Modal,
   },
 
   data: function() {
-    return {
-      activeID: "groupID1",
-    };
+    return {};
   },
   methods: {
     addToQueue: function({ messages, id }) {
-      this.$store.commit("addMessageToQueue", { messages, id });
-    },
-    changeID: function(id) {
-      this.activeID = id;
+      this.$store.commit("chat/addMessageToQueue", { messages, id });
     },
     getMessages: function() {
-      return this.$store.getters.getMessagesByDialogueID(this.activeID);
+      return this.$store.getters["chat/getMessagesByDialogueID"](this.getID);
     },
   },
   computed: {
     messagesQueues: function() {
-      return this.$store.getters.getMessagesQueue;
+      return this.$store.getters["chat/getMessagesQueue"];
+    },
+    getID: function() {
+      return this.$store.getters["chat/getActiveID"];
+    },
+    isLogin: function() {
+      return this.$store.getters["auth/getIsLogin"];
     },
   },
 };

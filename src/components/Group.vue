@@ -18,7 +18,7 @@
 import Message from "./Message.vue";
 
 export default {
-  name: "App",
+  name: "Group",
   components: {
     Message,
   },

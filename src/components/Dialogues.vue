@@ -1,7 +1,6 @@
 <template>
   <div class="dialogues">
     <Dialogue
-      v-on:selectID="selectDialogue"
       :dialogueID="key"
       v-for="(item, key) in messagesQueues"
       :key="key"
@@ -21,11 +20,7 @@ export default {
   components: {
     Dialogue,
   },
-  methods: {
-    selectDialogue: function(data) {
-      this.$emit("getID", data);
-    },
-  },
+  methods: {},
 };
 </script>
 

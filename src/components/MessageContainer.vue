@@ -1,6 +1,7 @@
 <template>
   <div class="">
     <div class="chat">
+      <Sidebar />
       <Group :messages="messagesQueues" />
       <MsgInput v-on:message="createAndSendMessage" />
     </div>
@@ -8,6 +9,7 @@
 </template>
 
 <script>
+import Sidebar from "./Sidebar.vue";
 import Group from "./Group.vue";
 import MsgInput from "./MessageInput.vue";
 
@@ -33,10 +35,11 @@ const senders = [
 ];
 
 export default {
-  name: "App",
+  name: "MessageContainer",
   components: {
     Group,
     MsgInput,
+    Sidebar,
   },
   props: {
     messagesQueues: Array,

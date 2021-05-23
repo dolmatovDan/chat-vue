@@ -28,7 +28,7 @@ export default {
   components: {},
   methods: {
     selectDialogue: function() {
-      this.$emit("selectID", this.dialogueID);
+      this.$store.commit("chat/changeID", this.dialogueID);
     },
   },
   computed: {},

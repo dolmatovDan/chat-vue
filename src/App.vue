@@ -20,5 +20,6 @@ export default {
   display: flex;
   justify-content: center;
   font-family: Trebuchet MS;
+  padding: 15px;
 }
 </style>

@@ -7,11 +7,13 @@
       v-on:addToQueue="addToQueue"
     />
     <Modal v-show="!isLogin" />
+    <SignUpModal v-show="isWantSignUp" />
   </div>
 </template>
 
 <script>
 import MessageContainer from "./MessageContainer.vue";
+import SignUpModal from "./SignUpModal.vue";
 import Dialogues from "./Dialogues.vue";
 
 import Modal from "./Modal.vue";
@@ -19,9 +21,15 @@ import Modal from "./Modal.vue";
 export default {
   name: "SocialNetwork",
   components: {
+    SignUpModal,
     MessageContainer,
     Dialogues,
     Modal,
+  },
+  mounted() {
+    fetch("http://localhost:8000/").then((data) => {
+      return data.json();
+    });
   },
 
   data: function() {
@@ -44,6 +52,9 @@ export default {
     },
     isLogin: function() {
       return this.$store.getters["auth/getIsLogin"];
+    },
+    isWantSignUp: function() {
+      return this.$store.getters["auth/getWantSignUp"];
     },
   },
 };

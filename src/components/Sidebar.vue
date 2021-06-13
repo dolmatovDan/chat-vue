@@ -6,12 +6,14 @@
 </template>
 
 <script>
+import UserService from "../services/UserService";
 export default {
   name: "Sidebar",
   components: {},
   methods: {
     logOut: function() {
-      this.$store.commit("auth/changeIsLogin");
+      this.$store.commit("auth/changeIsLogin", false);
+      UserService.logOut();
     },
   },
 };
@@ -28,7 +30,6 @@ export default {
   width: 100%;
   background-color: #fff;
   padding: 5px;
-  border-top: 1px solid #eaedf3;
   border-bottom: 1px solid #eaedf3;
   padding-left: 15px;
   padding-right: 15px;

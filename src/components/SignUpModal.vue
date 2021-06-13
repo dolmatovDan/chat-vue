@@ -1,36 +1,36 @@
 <template>
-  <div class="modal" id="modal">
+  <div class="modal modal-sign-up" id="modal-sign-up">
     <div class="modal__window">
       <div class="modal__container">
-        <h3 class="modal__title">Войти в учётную запись</h3>
+        <h3 class="modal__title">Создайте учётную запись</h3>
+
         <div class="modal__auth">
           <input
             v-model="login"
             type="text"
-            id="login"
+            id="login-sign-up"
             placeholder="Введите логин"
             class="modal__input"
           />
           <input
             v-model="password"
             type="password"
-            id="password"
+            id="password-sign-up"
             placeholder="Введите пароль"
             class="modal__input modal__password"
           />
-          <button
-            @click="isCorrectLogin"
-            class="button button--auth"
-            id="btn-auth"
-          >
-            Войти
+          <input
+            type="password"
+            id="password-sign-up"
+            placeholder="Повторите пароль"
+            class="modal__input modal__password"
+          />
+          <button class="button button--auth" id="btn-login" @click="gaveData">
+            Зарегестрироваться
           </button>
         </div>
 
-        <span id="errors" class="modal__span"></span>
-        <button id="btn-sign-up" @click="signUp" class="button button__sign-up">
-          Зарегестрируйтесь бесплатно
-        </button>
+        <span id="errors-sign-up" class="modal__span"></span>
         <p class="text__errors" v-text="error"></p>
       </div>
     </div>
@@ -52,15 +52,25 @@ export default {
   name: "Modal",
   components: {},
   methods: {
-    isCorrectLogin: function() {
-      this.$store.dispatch("auth/isCorrectLogin", {
+    gaveData: function() {
+      this.$store.dispatch("auth/sendUserData", {
         login: this.login,
         password: this.password,
       });
     },
-    signUp: function() {
-      this.$store.commit("auth/changeWantSignUp", true);
-      this.$store.commit("auth/changeIsLogin", true);
+    checkForm: function() {
+      if (this.name && this.age) {
+        return true;
+      }
+
+      this.errors = [];
+
+      if (!this.name) {
+        this.errors.push("Name required.");
+      }
+      if (!this.age) {
+        this.errors.push("Age required.");
+      }
     },
   },
   computed: {
@@ -75,8 +85,8 @@ export default {
 </script>
 
 <style>
-.text__errors {
-  color: red;
+.modal-sign-up {
+  z-index: 100;
 }
 .modal {
   position: absolute;
@@ -93,17 +103,6 @@ export default {
 .button {
   border: none;
   background-color: transparent;
-  cursor: pointer;
-}
-
-.button__sign-up {
-  cursor: pointer;
-  font-size: 16px;
-}
-.button__sign-up:hover {
-  color: blueviolet;
-  text-decoration: underline;
-  transition: color 0.3s;
 }
 .button--auth {
   display: block;

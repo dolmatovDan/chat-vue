@@ -36,6 +36,9 @@ export const auth = {
     },
     changeWantSignUp: function(state, data) {
         state.wantSignUp = data;
+    },
+    changeErrors: function(state, err) {
+        state.errors = err;
     }
   },
   actions: {
@@ -57,11 +60,13 @@ export const auth = {
     async sendUserData({commit, state}, {login, password}) {
         const response = await UserService.sendUserData({login, password});
         state.errors = response["message"];
+    
         if (response["isLogin"]) {
             commit("changeWantSignUp", false);
             commit("clearErrors");
+            commit("changeIsLogin", true);
         }
-        
+        return Promise.resolve(response["isLogin"]);
     }
   }
 }

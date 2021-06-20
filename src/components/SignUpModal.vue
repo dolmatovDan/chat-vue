@@ -24,6 +24,7 @@
             id="password-sign-up"
             placeholder="Повторите пароль"
             class="modal__input modal__password"
+            v-model="repeatPassword"
           />
           <button class="button button--auth" id="btn-login" @click="gaveData">
             Зарегестрироваться
@@ -44,6 +45,7 @@ export default {
     return {
       password: "",
       login: "",
+      repeatPassword: "",
     };
   },
   created: function() {
@@ -53,24 +55,27 @@ export default {
   components: {},
   methods: {
     gaveData: function() {
-      this.$store.dispatch("auth/sendUserData", {
-        login: this.login,
-        password: this.password,
-      });
+      if (this.password == this.repeatPassword) {
+        this.$store
+          .dispatch("auth/sendUserData", {
+            login: this.login,
+            password: this.password,
+          })
+          .then((isLogin) => {
+            if (isLogin) {
+              this.clearForm();
+              UserService.addToLocalStorage();
+            }
+          });
+      } else {
+        this.$store.commit("auth/changeErrors", "Пароли не совпали");
+      }
     },
-    checkForm: function() {
-      if (this.name && this.age) {
-        return true;
-      }
-
-      this.errors = [];
-
-      if (!this.name) {
-        this.errors.push("Name required.");
-      }
-      if (!this.age) {
-        this.errors.push("Age required.");
-      }
+    clearForm: function() {
+      this.$store.commit("auth/clearErrors");
+      this.password = "";
+      this.repeatPassword = "";
+      this.login = "";
     },
   },
   computed: {

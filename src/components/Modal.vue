@@ -61,6 +61,7 @@ export default {
     signUp: function() {
       this.$store.commit("auth/changeWantSignUp", true);
       this.$store.commit("auth/changeIsLogin", true);
+      this.$store.commit("auth/clearErrors");
     },
   },
   computed: {
